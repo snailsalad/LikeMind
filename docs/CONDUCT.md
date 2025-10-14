@@ -103,5 +103,5 @@ I have read, understood, and agree to abide by this Code of Conduct.
 Name: Jeena Weber Langstaff          Date: October 9, 2025
 Name: Kyle Bodnar                    Date: October 9, 2025
 Name: Aaron Rossi                    Date: October 9, 2025
-Name:                                Date: 
+Name: Cecilia Masterson              Date: October 9, 2025
 </pre>
