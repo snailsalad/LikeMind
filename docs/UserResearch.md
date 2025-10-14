@@ -2,7 +2,7 @@
 
 ## Observation 1
   Observation Statement: When it comes to being introverted, extroverted or both it was evenly matched with both or introverted
-  Supporting Data: Respnse was 47.4% said they were ambiverted (both) and 42.1% said they were introverted and only 10.5 said they were extroverts. 
+  Supporting Data: Response was 47.4% said they were ambiverted (both) and 42.1% said they were introverted and only 10.5 said they were extroverts. 
 
   Team Action (if any): None
 
@@ -17,9 +17,9 @@
   Team Action (if any): Prioritize verification of student emails
 
 ## Observation 4
-  Observation Statement: \
-  Supporting Data:  \
-  Team Action (if any):
+  Observation Statement: When it came to the number of University/College events they participated in over the last month, most people were involved in fewer than 5 events.
+  Supporting Data: The average response was a 3.74 out of 10.
+  Team Action (if any): An easy-to-use interface that recommends events based on your interests, which would make it easier for people to get involved.
 
 ## Observation 5
   Observation Statement: \
