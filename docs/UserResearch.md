@@ -12,9 +12,9 @@
   Team Action (if any): Create a variety of group setting possibilities but an emphasis on smaller ones
 
 ## Observation 3
-  Observation Statement:  \
-  Supporting Data:  \
-  Team Action (if any):
+  Observation Statement:  Verified student only access is highly importnat to potential users \
+  Supporting Data:  79.4% of respondents said that student only access was either "Important" or "Very Important" \
+  Team Action (if any): Prioritize verification of student emails
 
 ## Observation 4
   Observation Statement: \
