@@ -1,4 +1,0 @@
-- [Transfer Students](https://docs.google.com/presentation/d/15pHpkPfO2hiVXdKZdyyuLou8Hn03mms5JNrE8keM_N0/edit?usp=sharing)
-- [International Students](https://docs.google.com/presentation/d/15pHpkPfO2hiVXdKZdyyuLou8Hn03mms5JNrE8keM_N0/edit?usp=sharing?slide=id.g368d9fcaf85_2_1#slide=id.g368d9fcaf85_2_1)
-- [Freshmen / Sophomores](https://docs.google.com/presentation/d/15pHpkPfO2hiVXdKZdyyuLou8Hn03mms5JNrE8keM_N0/edit?usp=sharing?slide=id.g368d9fcaf85_2_8#slide=id.g368d9fcaf85_2_8)
-- [Juniors / Seniors](https://docs.google.com/presentation/d/15pHpkPfO2hiVXdKZdyyuLou8Hn03mms5JNrE8keM_N0/edit?usp=sharing?slide=id.g368d9fcaf85_2_15#slide=id.g368d9fcaf85_2_15)
