@@ -12,4 +12,4 @@ How to collect:  Tracking the number of new student sign-ups and account verific
 # Metric 5 - Retention
 How to collect: Track Day 1/7/30 retention by logging signup and app_open events in Firebase Analytics, then use Cohort Analysis to measure what percentage of users return 1, 7, and 30 days after signup.
 # Metric 6 - Task Success 
-How to collect: Tracking the the number of how easily students are able to match, start a conversation and amount of meetups. 
+How to collect: Tracking the the number matches per student, number of messages and number of attendance in meetups. 
