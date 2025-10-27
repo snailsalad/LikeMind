@@ -7,6 +7,7 @@ Experiment:
 Using Firebase Remote Config, we will show half of users a new logo with a high-contrast color scheme, while the other half continue with the default design. Engagement metrics will be tracked over the test period.
 
 Variations:
+
 Variation 1:
 <img width="1024" height="1024" alt="ChatGPT Image Oct 22, 2025, 04_06_28 PM" src="https://github.com/user-attachments/assets/c28d9293-8e5c-49b5-9d33-20ac775a63e5" />
 
