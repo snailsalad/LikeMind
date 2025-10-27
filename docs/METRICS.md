@@ -8,8 +8,8 @@ How to collect:  Firebase backend analytics track how many users open the app in
 # Metric 3 - Click-Through Rate (CTR)
 How to collect:  Track the number of users who click on a persons profile in the match screen, as well as how many matches a user then has and compare the difference.
 # Metric 4 - Adoption
-How to collect:  \
+How to collect:  Tracking the number of new student sign-ups and account verification, and how many times they click on core features for our golden path.  
 # Metric 5 - Retention
 How to collect: Track Day 1/7/30 retention by logging signup and app_open events in Firebase Analytics, then use Cohort Analysis to measure what percentage of users return 1, 7, and 30 days after signup.
-# Metric 6 
-How to collect: 
+# Metric 6 - Task Success 
+How to collect: Tracking the the number of how easily students are able to match, and amount of meetups. 
