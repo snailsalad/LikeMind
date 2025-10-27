@@ -10,6 +10,6 @@ How to collect:  Track the number of users who click on a persons profile in the
 # Metric 4 - Adoption
 How to collect:  \
 # Metric 5 - Retention
-How to collect:  \
+How to collect: rack Day 1/7/30 retention by logging signup and app_open events in Firebase Analytics, then use Cohort Analysis to measure what percentage of users return 1, 7, and 30 days after signup.
 # Metric 6 
 How to collect: 
