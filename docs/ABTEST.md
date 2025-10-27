@@ -11,6 +11,7 @@ Variation 1:
 <img width="1024" height="1024" alt="ChatGPT Image Oct 22, 2025, 04_06_28 PM" src="https://github.com/user-attachments/assets/c28d9293-8e5c-49b5-9d33-20ac775a63e5" />
 
 Variation 2:
+
 <img width="512" height="512" alt="unnamed" src="https://github.com/user-attachments/assets/0bd286d5-3bbd-43d9-93e5-a51e24d26929" />
 
 # A/B Test 2
