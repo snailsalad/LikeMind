@@ -30,8 +30,11 @@ Experiment: We will implement two version of screens, one has both login and sig
 Variations: The control variable is the default signup and logging screen together as the original layout, while the variable will be the two seperate screens for login and signup. 
 
 # A/B Test 4
-User Story #: \
-Metrics: \
-Hypothesis: \
-Experiment: \
-Variations: \
+User Story #: 4 \
+Metrics: Login frequency, retention time, number of matches \
+Hypothesis: Users might be more engaged by a swiping system that suggests other users than a search bar. A swiping system would allow users to instantly find other users to connect with after creating an account which may improve retention. \
+Experiment: Create 2 different matching screens: A Search bar with filters by major and hobbies and a Swiping system with random user suggestions based on majors and hobbies.
+Each screen will be randomly assigned through firebase remote config to half of users each.
+Metrics will be tracked by tracking time spent on the matching page and the number of match requests each user makes.
+Retention will also be tracked with the 1 and 7 day retention statistics. \
+Variations: Page with 1 suggestion of a user profile, can be accepted or rejected or a search bar with filters to find people by major and hobby
