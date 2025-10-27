@@ -23,11 +23,11 @@ Experiment: We will change the primary and secondary colors on the app to a high
 Variations: Control variable will be the default/neutral color scheme already in place, while the variable will be the high-contrast alternate color scheme.
 
 # A/B Test 3
-User Story #: \
-Metrics: \
-Hypothesis: \
-Experiment: \
-Variations: \
+User Story #: 1 \
+Metrics: Login frequency,and the amount of daily active users. 
+Hypothesis: Choosing a differrent way of logging in and signing up seperately will cause retention, egagement and daily active users to decrease \
+Experiment: We will implement two version of screens, one has both login and signup in one screen, while the other version will have each seperately to make signing up and verification be its own entity\
+Variations: The control variable is the default signup and logging screen together as the original layout, while the variable will be the two seperate screens for login and signup. \
 
 # A/B Test 4
 User Story #: \
