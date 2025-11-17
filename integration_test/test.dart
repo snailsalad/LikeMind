@@ -67,7 +67,7 @@ void main() async {
         find.byKey(const ValueKey('LoginEmail_z4g2')), 'dickbutt@aol.com');
     await tester.enterText(
         find.byKey(const ValueKey('LoginPassword_950w')), 'Password123!');
-    await tester.tap(find.byKey(const ValueKey('SignUpButton_2nw2')));
+    await tester.tap(find.byKey(const ValueKey('LoginButton_styz')));
     await tester.pumpAndSettle(const Duration(milliseconds: 5));
     expect(find.text('Profile'), findsWidgets);
   });

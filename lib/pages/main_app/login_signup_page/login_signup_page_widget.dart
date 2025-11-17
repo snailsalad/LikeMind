@@ -1067,6 +1067,7 @@ class _LoginSignupPageWidgetState extends State<LoginSignupPageWidget>
                       children: [
                         if (_model.tabBarCurrentIndex == 1)
                           FFButtonWidget(
+                            key: ValueKey('LoginButton_styz'),
                             onPressed: () async {
                               logFirebaseEvent(
                                   'LOGIN_SIGNUP_LoginButton_ON_TAP');
