@@ -40,7 +40,7 @@ void main() async {
     ));
     await GoogleFonts.pendingFonts();
 
-    await tester.pumpAndSettle(const Duration(milliseconds: 2));
+    await tester.pumpAndSettle(const Duration(milliseconds: 2000));
     await tester.enterText(find.byKey(const ValueKey('SignUpEmail_uigm')),
         'accounttest@gmail.com');
     await tester.enterText(
@@ -48,7 +48,7 @@ void main() async {
     await tester.enterText(
         find.byKey(const ValueKey('SignUpConfirm_ggcb')), 'Password123!');
     await tester.tap(find.byKey(const ValueKey('SignUpButton_2nw2')));
-    await tester.pumpAndSettle(const Duration(milliseconds: 5));
+    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
     expect(find.text('Choose Your School'), findsWidgets);
   });
 
@@ -61,20 +61,21 @@ void main() async {
     ));
     await GoogleFonts.pendingFonts();
 
-    await tester.pumpAndSettle(const Duration(milliseconds: 2));
+    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
     await tester.tap(find.byKey(const ValueKey('LoginTab_giet')));
     await tester.enterText(
-        find.byKey(const ValueKey('LoginEmail_z4g2')), 'dickbutt@aol.com');
+        find.byKey(const ValueKey('LoginEmail_z4g2')), 'crmasterson@uri.edu');
     await tester.enterText(
-        find.byKey(const ValueKey('LoginPassword_950w')), 'Password123!');
+        find.byKey(const ValueKey('LoginPassword_950w')), 'Password1!');
     await tester.tap(find.byKey(const ValueKey('LoginButton_styz')));
-    await tester.pumpAndSettle(const Duration(milliseconds: 5));
+    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
     expect(find.text('Profile'), findsWidgets);
   });
 
   testWidgets('US3 Profile Creation Test', (WidgetTester tester) async {
     _overrideOnError();
-
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: 'dickbutt@aol.com', password: 'Password123!');
     await tester.pumpWidget(ChangeNotifierProvider(
       create: (context) => FFAppState(),
       child: const MyApp(),
@@ -111,7 +112,8 @@ void main() async {
 
   testWidgets('US4 Golden Path Test', (WidgetTester tester) async {
     _overrideOnError();
-
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: 'dickbutt@aol.com', password: 'Password123!');
     await tester.pumpWidget(ChangeNotifierProvider(
       create: (context) => FFAppState(),
       child: const MyApp(),
@@ -128,7 +130,8 @@ void main() async {
 
   testWidgets('US5 Chat Messaging Test', (WidgetTester tester) async {
     _overrideOnError();
-
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: 'dickbutt@aol.com', password: 'Password123!');
     await tester.pumpWidget(ChangeNotifierProvider(
       create: (context) => FFAppState(),
       child: const MyApp(),
