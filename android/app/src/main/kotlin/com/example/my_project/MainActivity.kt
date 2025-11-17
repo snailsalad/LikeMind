@@ -1,4 +1,4 @@
-package com.mycompany.likemind
+package com.uricsc305.likemind
 
 import io.flutter.embedding.android.FlutterActivity
 

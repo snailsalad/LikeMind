@@ -7,7 +7,7 @@
     "braintree": "^3.6.0",
     "@mux/mux-node": "^7.3.3",
     "stripe": "^8.0.1",
-    "axios": "1.8.2",
+    "axios": "1.12.0",
     "razorpay": "^2.8.4",
     "qs": "^6.7.0",
     "@onesignal/node-onesignal": "^2.0.1-beta2",
@@ -23,10 +23,10 @@
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint --max-warnings=0 .",
-    "serve": "firebase -P  emulators:start --only functions",
-    "shell": "firebase -P  functions:shell",
+    "serve": "firebase -P like-mind-2iwscr emulators:start --only functions",
+    "shell": "firebase -P like-mind-2iwscr functions:shell",
     "start": "npm run shell",
-    "logs": "firebase -P  functions:log",
+    "logs": "firebase -P like-mind-2iwscr functions:log",
     "compile": "cp ../../tsconfig.template.json ./tsconfig-compile.json && tsc --project tsconfig-compile.json"
   },
   "engines": {

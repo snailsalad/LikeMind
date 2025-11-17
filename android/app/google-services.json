@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "526587493281",
+    "firebase_url": "https://like-mind-2iwscr-default-rtdb.firebaseio.com",
+    "project_id": "like-mind-2iwscr",
+    "storage_bucket": "like-mind-2iwscr.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526587493281:android:5c5fc5320aaa10e4c769e0",
+        "android_client_info": {
+          "package_name": "com.mycompany.likemind"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvZx2nodVNUY5yAuqd0GTuegY2d-JTQBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526587493281:android:d70fb1e6d10c7802c769e0",
+        "android_client_info": {
+          "package_name": "com.uricsc305.likemind"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvZx2nodVNUY5yAuqd0GTuegY2d-JTQBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

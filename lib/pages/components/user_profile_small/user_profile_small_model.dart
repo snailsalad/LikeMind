@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'load_in_page_widget.dart' show LoadInPageWidget;
+import 'user_profile_small_widget.dart' show UserProfileSmallWidget;
 import 'package:flutter/material.dart';
 
-class LoadInPageModel extends FlutterFlowModel<LoadInPageWidget> {
+class UserProfileSmallModel extends FlutterFlowModel<UserProfileSmallWidget> {
   @override
   void initState(BuildContext context) {}
 

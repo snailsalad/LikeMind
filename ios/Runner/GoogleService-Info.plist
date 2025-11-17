@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBH4c2OfcJQfcAlmwmySmXyp8fKxTpV8LM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>526587493281</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.uricsc305.likemind</string>
+	<key>PROJECT_ID</key>
+	<string>like-mind-2iwscr</string>
+	<key>STORAGE_BUCKET</key>
+	<string>like-mind-2iwscr.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:526587493281:ios:46b7f7699bed191fc769e0</string>
+	<key>DATABASE_URL</key>
+	<string>https://like-mind-2iwscr-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

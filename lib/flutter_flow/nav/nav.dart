@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
+import '/main.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -70,31 +72,118 @@ class AppStateNotifier extends ChangeNotifier {
   }
 }
 
-GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
+GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
+    GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? LoggedInPageWidget() : LoadInPageWidget(),
+      errorBuilder: (context, state) => appStateNotifier.loggedIn
+          ? entryPage ?? NavBarPage()
+          : LoginSignupPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? LoggedInPageWidget()
-              : LoadInPageWidget(),
+              ? entryPage ?? NavBarPage()
+              : LoginSignupPageWidget(),
         ),
         FFRoute(
-          name: LoadInPageWidget.routeName,
-          path: LoadInPageWidget.routePath,
-          builder: (context, params) => LoadInPageWidget(),
+          name: ProfileCreationSchoolSelectWidget.routeName,
+          path: ProfileCreationSchoolSelectWidget.routePath,
+          builder: (context, params) => ProfileCreationSchoolSelectWidget(),
         ),
         FFRoute(
-          name: LoggedInPageWidget.routeName,
-          path: LoggedInPageWidget.routePath,
-          builder: (context, params) => LoggedInPageWidget(),
-        )
+          name: ProfileCreationAboutMeWidget.routeName,
+          path: ProfileCreationAboutMeWidget.routePath,
+          builder: (context, params) => ProfileCreationAboutMeWidget(),
+        ),
+        FFRoute(
+          name: LoginSignupPageWidget.routeName,
+          path: LoginSignupPageWidget.routePath,
+          builder: (context, params) => LoginSignupPageWidget(),
+        ),
+        FFRoute(
+          name: ChangePasswordPageWidget.routeName,
+          path: ChangePasswordPageWidget.routePath,
+          builder: (context, params) => ChangePasswordPageWidget(),
+        ),
+        FFRoute(
+          name: ProfileCreationSelectInterestsWidget.routeName,
+          path: ProfileCreationSelectInterestsWidget.routePath,
+          builder: (context, params) => ProfileCreationSelectInterestsWidget(),
+        ),
+        FFRoute(
+          name: MatchProfileWidget.routeName,
+          path: MatchProfileWidget.routePath,
+          asyncParams: {
+            'matchedUser': getDoc(['users'], UsersRecord.fromSnapshot),
+          },
+          builder: (context, params) => MatchProfileWidget(
+            matchedUser: params.getParam(
+              'matchedUser',
+              ParamType.Document,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: NpsSurveyPageWidget.routeName,
+          path: NpsSurveyPageWidget.routePath,
+          builder: (context, params) => NpsSurveyPageWidget(),
+        ),
+        FFRoute(
+            name: UserSearchWidget.routeName,
+            path: UserSearchWidget.routePath,
+            builder: (context, params) => params.isEmpty
+                ? NavBarPage(initialPage: 'userSearch')
+                : NavBarPage(
+                    initialPage: 'userSearch',
+                    page: UserSearchWidget(),
+                  )),
+        FFRoute(
+            name: MatchScreenWidget.routeName,
+            path: MatchScreenWidget.routePath,
+            builder: (context, params) => params.isEmpty
+                ? NavBarPage(initialPage: 'MatchScreen')
+                : NavBarPage(
+                    initialPage: 'MatchScreen',
+                    page: MatchScreenWidget(),
+                  )),
+        FFRoute(
+            name: ProfilePageWidget.routeName,
+            path: ProfilePageWidget.routePath,
+            builder: (context, params) => params.isEmpty
+                ? NavBarPage(initialPage: 'profilePage')
+                : NavBarPage(
+                    initialPage: 'profilePage',
+                    page: ProfilePageWidget(),
+                  )),
+        FFRoute(
+          name: MessagingWidget.routeName,
+          path: MessagingWidget.routePath,
+          builder: (context, params) => MessagingWidget(
+            chatRef: params.getParam(
+              'chatRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['chats'],
+            ),
+            viewedTime: params.getParam(
+              'viewedTime',
+              ParamType.DateTime,
+            ),
+          ),
+        ),
+        FFRoute(
+            name: ChatsWidget.routeName,
+            path: ChatsWidget.routePath,
+            builder: (context, params) => params.isEmpty
+                ? NavBarPage(initialPage: 'chats')
+                : NavBarPage(
+                    initialPage: 'chats',
+                    page: ChatsWidget(),
+                  ))
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
@@ -212,6 +301,8 @@ class FFParameters {
     String paramName,
     ParamType type, {
     bool isList = false,
+    List<String>? collectionNamePath,
+    StructBuilder<T>? structBuilder,
   }) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
@@ -229,6 +320,8 @@ class FFParameters {
       param,
       type,
       isList,
+      collectionNamePath: collectionNamePath,
+      structBuilder: structBuilder,
     );
   }
 }
@@ -262,7 +355,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/loadInPage';
+            return '/loginSignupPage';
           }
           return null;
         },
