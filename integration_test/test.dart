@@ -40,9 +40,9 @@ void main() async {
     ));
     await GoogleFonts.pendingFonts();
 
-    await tester.pumpAndSettle(const Duration(milliseconds: 2000));
+    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
     await tester.enterText(find.byKey(const ValueKey('SignUpEmail_uigm')),
-        'accounttest@gmail.com');
+        'accounttest@gmail.edu');
     await tester.enterText(
         find.byKey(const ValueKey('SignupPassword_5py5')), 'Password123!');
     await tester.enterText(
@@ -69,30 +69,36 @@ void main() async {
         find.byKey(const ValueKey('LoginPassword_950w')), 'Password1!');
     await tester.tap(find.byKey(const ValueKey('LoginButton_styz')));
     await tester.pumpAndSettle(const Duration(milliseconds: 5000));
-    expect(find.text('Profile'), findsWidgets);
+    expect(find.byKey(const ValueKey('Text_m3bw')), findsWidgets);
   });
 
   testWidgets('US3 Profile Creation Test', (WidgetTester tester) async {
     _overrideOnError();
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: 'dickbutt@aol.com', password: 'Password123!');
+
     await tester.pumpWidget(ChangeNotifierProvider(
       create: (context) => FFAppState(),
       child: const MyApp(),
     ));
     await GoogleFonts.pendingFonts();
 
-    await tester.pumpAndSettle(const Duration(milliseconds: 2));
+    await tester.pumpAndSettle(const Duration(milliseconds: 2000));
+    await tester.tap(find.byKey(const ValueKey('LoginTab_giet')));
+    await tester.enterText(
+        find.byKey(const ValueKey('LoginEmail_z4g2')), 'dickbutt@aol.com');
+    await tester.enterText(
+        find.byKey(const ValueKey('LoginPassword_950w')), 'Password123!');
+    await tester.tap(find.byKey(const ValueKey('LoginButton_styz')));
+    await tester.pumpAndSettle(const Duration(milliseconds: 50000));
     await tester.tap(find.byKey(const ValueKey('SchoolSelect_ckna')));
-    await tester.pumpAndSettle(const Duration(milliseconds: 2));
+    await tester.pumpAndSettle(const Duration(milliseconds: 2000));
     await tester.tap(find.byKey(const ValueKey('SchoolSelect_ckna')));
     await tester.tap(find.byKey(const ValueKey('MajorSelect_v843')));
-    await tester.pumpAndSettle(const Duration(milliseconds: 2));
+    await tester.pumpAndSettle(const Duration(milliseconds: 2000));
     await tester.tap(find.byKey(const ValueKey('MajorSelect_v843')));
     await tester.enterText(
         find.byKey(const ValueKey('SchoolYear_tyi1')), '2026');
     await tester.tap(find.byKey(const ValueKey('Submit_uw1s')));
-    await tester.pumpAndSettle(const Duration(milliseconds: 5));
+    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
     await tester.enterText(
         find.byKey(const ValueKey('FirstName_89sc')), 'First Name');
     await tester.enterText(
@@ -100,27 +106,35 @@ void main() async {
     await tester.enterText(
         find.byKey(const ValueKey('AboutMe_oycn')), 'Test bot');
     await tester.tap(find.byKey(const ValueKey('Birthday_wvtv')));
-    await tester.pumpAndSettle(const Duration(milliseconds: 2));
+    await tester.pumpAndSettle(const Duration(milliseconds: 2000));
     await tester.tap(find.byKey(const ValueKey('Birthday_wvtv')));
     await tester.tap(find.byKey(const ValueKey('Next_4fa6')));
-    await tester.pumpAndSettle(const Duration(milliseconds: 5));
+    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
     await tester.tap(find.byKey(const ValueKey('InterestChips_lq6v')));
     await tester.tap(find.byKey(const ValueKey('FinishButton_dotu')));
-    await tester.pumpAndSettle(const Duration(milliseconds: 5));
+    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
     expect(find.text('Profile'), findsWidgets);
   });
 
   testWidgets('US4 Golden Path Test', (WidgetTester tester) async {
     _overrideOnError();
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: 'dickbutt@aol.com', password: 'Password123!');
+
     await tester.pumpWidget(ChangeNotifierProvider(
       create: (context) => FFAppState(),
       child: const MyApp(),
     ));
     await GoogleFonts.pendingFonts();
 
-    await tester.pumpAndSettle(const Duration(milliseconds: 2));
+    await tester.pumpAndSettle(const Duration(milliseconds: 2000));
+    await tester.tap(find.byKey(const ValueKey('LoginTab_giet')));
+    await tester.enterText(
+        find.byKey(const ValueKey('LoginEmail_z4g2')), 'dickbutt@aol.com');
+    await tester.enterText(
+        find.byKey(const ValueKey('LoginPassword_950w')), 'Password123!');
+    await tester.tap(find.byKey(const ValueKey('LoginButton_styz')));
+    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
+    await tester.tap(find.byIcon(Icons.home_outlined));
+    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
     await tester.tap(find.byKey(const ValueKey('matchProfileComponent_ti7e')));
     await tester.pumpAndSettle(const Duration(milliseconds: 5));
     await tester.tap(find.byKey(const ValueKey('Button_vv2s')));
@@ -130,8 +144,7 @@ void main() async {
 
   testWidgets('US5 Chat Messaging Test', (WidgetTester tester) async {
     _overrideOnError();
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: 'dickbutt@aol.com', password: 'Password123!');
+
     await tester.pumpWidget(ChangeNotifierProvider(
       create: (context) => FFAppState(),
       child: const MyApp(),
@@ -139,6 +152,15 @@ void main() async {
     await GoogleFonts.pendingFonts();
 
     await tester.pumpAndSettle(const Duration(milliseconds: 2));
+    await tester.tap(find.byKey(const ValueKey('LoginTab_giet')));
+    await tester.enterText(
+        find.byKey(const ValueKey('LoginEmail_z4g2')), 'dickbutt@aol.com');
+    await tester.enterText(
+        find.byKey(const ValueKey('LoginPassword_950w')), 'Password123!');
+    await tester.tap(find.byKey(const ValueKey('LoginButton_styz')));
+    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
+    await tester.tap(find.byIcon(Icons.chat_bubble_outline));
+    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
     await tester.enterText(
         find.byKey(const ValueKey('ChatField_dxuy')), 'Test Message');
     await tester.pumpAndSettle(const Duration(milliseconds: 2));

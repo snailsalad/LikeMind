@@ -76,6 +76,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                   ),
                 ),
                 Text(
+                  key: ValueKey('Text_m3bw'),
                   'Profile',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         font: GoogleFonts.inter(
