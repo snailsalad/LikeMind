@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LikeMind - About the App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-yellow: #ffd343;
+            --accent-orange: #b7410e;
+            --accent-orange-light: rgba(183, 65, 14, 0.85);
+            --text-dark: #1a1a1a;
+            --text-light: #ffffff;
+            --bg-cream: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: #ffffff;
+            padding: 2rem 4rem;
+            position: relative;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-yellow), var(--accent-orange));
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 0.85rem 2rem;
+            background: var(--accent-orange);
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.02em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(183, 65, 14, 0.25);
+            border: 2px solid transparent;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-yellow);
+            color: var(--text-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 211, 67, 0.4);
+        }
+
+        .nav-btn.active {
+            background: var(--primary-yellow);
+            color: var(--text-dark);
+            border: 2px solid var(--accent-orange);
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 200;
+        }
+
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 200px;
+            padding: 0.75rem 1rem;
+            padding-right: 2.5rem;
+            border: 2px solid var(--accent-orange);
+            border-radius: 25px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: white;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .search-input:focus {
+            width: 280px;
+            border-color: var(--primary-yellow);
+            box-shadow: 0 4px 20px rgba(255, 211, 67, 0.3);
+        }
+
+        .search-input::placeholder {
+            color: #999;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--accent-orange);
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+        }
+
+        .search-btn:hover {
+            color: var(--primary-yellow);
+        }
+
+        .search-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .search-results {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            width: 350px;
+            max-height: 400px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(183, 65, 14, 0.1);
+            display: none;
+            z-index: 300;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-results-header {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-results-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #999;
+            font-size: 1.2rem;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .search-results-close:hover {
+            color: var(--accent-orange);
+        }
+
+        .search-result-item {
+            padding: 1rem;
+            border-bottom: 1px solid #f5f5f5;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+
+        .search-result-item:hover {
+            background: rgba(255, 211, 67, 0.1);
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-title {
+            font-weight: 600;
+            color: var(--accent-orange);
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+        }
+
+        .search-result-page {
+            font-size: 0.75rem;
+            color: #999;
+            margin-bottom: 0.35rem;
+        }
+
+        .search-result-snippet {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .search-result-snippet mark {
+            background: var(--primary-yellow);
+            color: var(--text-dark);
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+
+        .no-results {
+            padding: 2rem;
+            text-align: center;
+            color: #999;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: #ffffff;
+            padding: 6rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 211, 67, 0.2) 0%, transparent 70%);
+            top: -200px;
+            right: -100px;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(183, 65, 14, 0.1) 0%, transparent 70%);
+            bottom: -150px;
+            left: -100px;
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: clamp(3rem, 8vw, 5rem);
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, var(--accent-orange), var(--primary-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.35rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        .app-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .app-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: var(--text-dark);
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .app-badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .app-badge svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .app-badge-text {
+            text-align: left;
+        }
+
+        .app-badge-text small {
+            display: block;
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        .app-badge-text strong {
+            font-size: 1.1rem;
+        }
+
+        /* App Preview Section */
+        .app-preview {
+            padding: 6rem 4rem;
+            background: white;
+        }
+
+        .app-preview-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .app-mockup {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .phone-frame {
+            width: 280px;
+            height: 560px;
+            background: var(--text-dark);
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        .phone-frame::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 25px;
+            background: var(--text-dark);
+            border-radius: 15px;
+            z-index: 10;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            border-radius: 30px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .screen-header {
+            padding: 2.5rem 1.5rem 1rem;
+            text-align: center;
+        }
+
+        .screen-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--text-dark);
+        }
+
+        .screen-profile {
+            padding: 0 1rem;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 0.75rem;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .profile-avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary-yellow), var(--accent-orange));
+            border-radius: 50%;
+        }
+
+        .profile-info h4 {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .profile-info p {
+            font-size: 0.7rem;
+            color: #999;
+        }
+
+        .profile-interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .interest-tag {
+            padding: 0.25rem 0.6rem;
+            background: rgba(255, 211, 67, 0.2);
+            color: var(--accent-orange);
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+
+        .app-details h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .app-details p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-yellow);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-orange);
+        }
+
+        .feature-list li div h4 {
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-list li div p {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Tech Stack Section */
+        .tech-stack {
+            padding: 6rem 4rem;
+            background: #f9f9f9;
+        }
+
+        .tech-stack h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tech-grid {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .tech-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(183, 65, 14, 0.1);
+        }
+
+        .tech-card .tech-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary-yellow), rgba(255, 211, 67, 0.5));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .tech-card h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Team Section */
+        .team {
+            padding: 6rem 4rem;
+            background: white;
+        }
+
+        .team h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .team-intro {
+            text-align: center;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+        }
+
+        .team-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-card {
+            background: #f9f9f9;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-yellow), var(--accent-orange));
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .team-card h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .team-card .role {
+            color: var(--accent-orange);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .team-card p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 4rem;
+            background: linear-gradient(135deg, var(--text-dark) 0%, #2a2a2a 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 211, 67, 0.1) 0%, transparent 70%);
+            top: -300px;
+            right: -200px;
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.2rem;
+            max-width: 500px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 1.25rem 3rem;
+            background: var(--primary-yellow);
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(255, 211, 67, 0.3);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 211, 67, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: var(--text-light);
+            padding: 3rem 4rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            opacity: 0.7;
+        }
+
+        /* GitHub Icon */
+        .github-link {
+            position: fixed;
+            right: 2rem;
+            top: 15%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        .github-icon {
+            width: 50px;
+            height: 50px;
+            border: 2px dashed var(--accent-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-orange);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .github-icon:hover {
+            background: var(--primary-yellow);
+            border-style: solid;
+            transform: scale(1.1);
+        }
+
+        .github-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .app-preview-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .app-mockup {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 1rem;
+            }
+
+            nav {
+                gap: 0.75rem;
+            }
+
+            .nav-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .hero, .app-preview, .tech-stack, .team, .cta-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .phone-frame {
+                width: 240px;
+                height: 480px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="nav-btn">Home</a>
+            <a href="documentation.html" class="nav-btn">User Documentation</a>
+            <a href="likemind.html" class="nav-btn active">LikeMind</a>
+        </nav>
+    </header>
+
+    <!-- GitHub Icon -->
+    <div class="github-link">
+        <a href="https://github.com/snailsalad/LikeMind" target="_blank" class="github-icon" aria-label="GitHub">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Meet <span>LikeMind</span></h1>
+        <p>The campus friendship app that helps college students form genuine connections through shared interests and meaningful matching.</p>
+        <div class="app-badges">
+            <a href="#" class="app-badge">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                <div class="app-badge-text">
+                    <small>Download on the</small>
+                    <strong>App Store</strong>
+                </div>
+            </a>
+            <a href="#" class="app-badge">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/></svg>
+                <div class="app-badge-text">
+                    <small>Get it on</small>
+                    <strong>Google Play</strong>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- App Preview Section -->
+    <section class="app-preview">
+        <div class="app-preview-container">
+            <div class="app-mockup">
+                <div class="phone-frame">
+                    <div class="phone-screen">
+                        <div class="screen-header">
+                            <h3>Discover Friends</h3>
+                        </div>
+                        <div class="screen-profile">
+                            <div class="profile-card">
+                                <div class="profile-header">
+                                    <div class="profile-avatar"></div>
+                                    <div class="profile-info">
+                                        <h4>Sarah M.</h4>
+                                        <p>Computer Science • Junior</p>
+                                    </div>
+                                </div>
+                                <div class="profile-interests">
+                                    <span class="interest-tag">Photography</span>
+                                    <span class="interest-tag">Hiking</span>
+                                    <span class="interest-tag">AI/ML</span>
+                                </div>
+                            </div>
+                            <div class="profile-card">
+                                <div class="profile-header">
+                                    <div class="profile-avatar"></div>
+                                    <div class="profile-info">
+                                        <h4>James K.</h4>
+                                        <p>Psychology • Sophomore</p>
+                                    </div>
+                                </div>
+                                <div class="profile-interests">
+                                    <span class="interest-tag">Music</span>
+                                    <span class="interest-tag">Gaming</span>
+                                    <span class="interest-tag">Coffee</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="app-details">
+                <h2>Friendship, Reimagined</h2>
+                <p>LikeMind addresses a growing challenge on college campuses: the difficulty of forming authentic friendships in an increasingly digital world. Our platform focuses on meaningful connections, not surface-level interactions.</p>
+                <ul class="feature-list">
+                    <li>
+                        <div class="feature-icon">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        </div>
+                        <div>
+                            <h4>Campus Profiles</h4>
+                            <p>Create your profile and connect with students on your campus</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                        </div>
+                        <div>
+                            <h4>Interest Matching</h4>
+                            <p>Smart algorithm connects you with like-minded peers</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        </div>
+                        <div>
+                            <h4>Event Planning</h4>
+                            <p>Organize meetups and activities with new friends</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="tech-stack">
+        <h2>Built With Modern Tech</h2>
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-icon">📱</div>
+                <h3>Flutter</h3>
+                <p>Cross-platform mobile development for iOS and Android</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">🔥</div>
+                <h3>Firebase</h3>
+                <p>Real-time database, authentication, and cloud functions</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">🎨</div>
+                <h3>FlutterFlow</h3>
+                <p>Visual development platform for rapid prototyping</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">🤖</div>
+                <h3>Smart Matching</h3>
+                <p>Interest-based algorithm for meaningful connections</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team">
+        <h2>Meet the Team</h2>
+        <p class="team-intro">LikeMind was created as a Software Engineering capstone project by a passionate team of URI students.</p>
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-avatar">CM</div>
+                <h3>Cecilia Rose Bodnar Masterson</h3>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">KJ</div>
+                <h3>Kyle Jones</h3>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">JWL</div>
+                <h3>Jeena Weber Langstaff</h3>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">AR</div>
+                <h3>Aaron Matthew Rossi</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Ready to Find Your People?</h2>
+        <p>Join thousands of students already making authentic connections on campus.</p>
+        <a href="#" class="cta-btn">Download LikeMind →</a>
+    </section>
+
+    <footer>
+        <p>© 2025 LikeMind. Building authentic campus connections.</p>
+    </footer>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <div class="search-wrapper">
+            <input type="text" class="search-input" placeholder="Search..." id="searchInput" autocomplete="off">
+            <button class="search-btn" id="searchBtn" aria-label="Search">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            </button>
+        </div>
+        <div class="search-results" id="searchResults">
+            <div class="search-results-header">
+                <span>Search Results</span>
+                <button class="search-results-close" id="closeResults">×</button>
+            </div>
+            <div id="resultsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        const siteContent = [
+            {
+                page: "Home",
+                url: "index.html",
+                title: "LikeMind - Campus Friendship App",
+                content: "Connect authentically. Build meaningful friendships on campus through shared interests and genuine connections."
+            },
+            {
+                page: "Home",
+                url: "index.html",
+                title: "Authentic Connections",
+                content: "Build genuine friendships through interest-based matching that goes beyond surface-level interactions."
+            },
+            {
+                page: "Home",
+                url: "index.html",
+                title: "Campus Community",
+                content: "Connect with real students from your campus community who share your interests and academic journey."
+            },
+            {
+                page: "Home",
+                url: "index.html",
+                title: "Interest Matching",
+                content: "Discover students who share your passions, hobbies, and academic interests through our intelligent matching algorithm."
+            },
+            {
+                page: "Home",
+                url: "index.html",
+                title: "Campus Events",
+                content: "Stay up to date with what's happening on campus. Browse events, activities, and meetups through our built-in calendar."
+            },
+            {
+                page: "User Documentation",
+                url: "documentation.html",
+                title: "Getting Started",
+                content: "Download LikeMind from the App Store or Google Play and create your account to start connecting with fellow students. Sign up with your email to create your profile. Complete your profile with a photo and bio. Select your interests from our curated categories."
+            },
+            {
+                page: "User Documentation",
+                url: "documentation.html",
+                title: "Creating Your Profile",
+                content: "Your profile is your first impression. Make it authentic and engaging. Profile Photo: Use a clear, recent photo. About Me: Share what makes you unique. Interests: Select topics you're genuinely passionate about. Availability: Set when you're typically free."
+            },
+            {
+                page: "User Documentation",
+                url: "documentation.html",
+                title: "Finding Connections",
+                content: "LikeMind uses your interests and preferences to suggest compatible friends. Browse suggested profiles on your home feed. Send a friend request to people you'd like to connect with. Plan meetups through the app's event feature."
+            },
+            {
+                page: "User Documentation",
+                url: "documentation.html",
+                title: "Meet Anyone on Campus",
+                content: "LikeMind makes it easy to connect with fellow students. Get to know people through chat before meeting up. Meet in popular campus spots like the library or student center. Invite mutual friends to group hangouts. Check out campus events together."
+            },
+            {
+                page: "User Documentation",
+                url: "documentation.html",
+                title: "FAQ: How is LikeMind different from dating apps?",
+                content: "LikeMind is designed exclusively for building platonic friendships. Our matching algorithm focuses on shared interests and compatibility for friendship, not romantic connections. There are no swipe features."
+            },
+            {
+                page: "User Documentation",
+                url: "documentation.html",
+                title: "FAQ: Who can use LikeMind?",
+                content: "LikeMind is designed for college students looking to make genuine friendships on campus. Simply download the app, create a profile, and start connecting with fellow students who share your interests."
+            },
+            {
+                page: "User Documentation",
+                url: "documentation.html",
+                title: "FAQ: How do I change my interests?",
+                content: "Go to your Profile settings and tap Edit Interests. You can add or remove interests at any time. Changes will immediately affect your future matches."
+            },
+            {
+                page: "User Documentation",
+                url: "documentation.html",
+                title: "FAQ: How do I unmatch with someone?",
+                content: "Go to your connections list, tap on the person's profile, and select Unmatch. This will remove them from your connections and you won't see each other in the app anymore."
+            },
+            {
+                page: "LikeMind",
+                url: "likemind.html",
+                title: "Meet LikeMind",
+                content: "The campus friendship app that helps college students form genuine connections through shared interests and meaningful matching."
+            },
+            {
+                page: "LikeMind",
+                url: "likemind.html",
+                title: "Friendship, Reimagined",
+                content: "LikeMind addresses a growing challenge on college campuses: the difficulty of forming authentic friendships in an increasingly digital world. Our platform focuses on meaningful connections."
+            },
+            {
+                page: "LikeMind",
+                url: "likemind.html",
+                title: "Campus Profiles",
+                content: "Create your profile and connect with students on your campus."
+            },
+            {
+                page: "LikeMind",
+                url: "likemind.html",
+                title: "Interest Matching Feature",
+                content: "Smart algorithm connects you with like-minded peers based on shared interests and hobbies."
+            },
+            {
+                page: "LikeMind",
+                url: "likemind.html",
+                title: "Event Planning Feature",
+                content: "Organize meetups and activities with new friends through the app's event feature."
+            },
+            {
+                page: "LikeMind",
+                url: "likemind.html",
+                title: "Tech Stack - Flutter",
+                content: "Cross-platform mobile development for iOS and Android using Flutter framework."
+            },
+            {
+                page: "LikeMind",
+                url: "likemind.html",
+                title: "Tech Stack - Firebase",
+                content: "Real-time database, authentication, and cloud functions powered by Firebase."
+            },
+            {
+                page: "LikeMind",
+                url: "likemind.html",
+                title: "Tech Stack - FlutterFlow",
+                content: "Visual development platform for rapid prototyping and app building."
+            },
+            {
+                page: "LikeMind",
+                url: "likemind.html",
+                title: "Download LikeMind",
+                content: "Download from App Store or Google Play. Join thousands of students making authentic connections on campus."
+            }
+        ];
+
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchResults = document.getElementById('searchResults');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const closeResults = document.getElementById('closeResults');
+
+        function performSearch(query) {
+            if (!query.trim()) {
+                searchResults.classList.remove('active');
+                return;
+            }
+
+            const searchTerms = query.toLowerCase().split(' ').filter(term => term.length > 0);
+            
+            const results = siteContent.filter(item => {
+                const searchText = (item.title + ' ' + item.content).toLowerCase();
+                return searchTerms.some(term => searchText.includes(term));
+            }).map(item => {
+                const searchText = (item.title + ' ' + item.content).toLowerCase();
+                let score = 0;
+                searchTerms.forEach(term => {
+                    if (item.title.toLowerCase().includes(term)) score += 10;
+                    const matches = (searchText.match(new RegExp(term, 'g')) || []).length;
+                    score += matches;
+                });
+                return { ...item, score };
+            }).sort((a, b) => b.score - a.score).slice(0, 8);
+
+            displayResults(results, query);
+        }
+
+        function displayResults(results, query) {
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<div class="no-results">No results found for "' + query + '"</div>';
+            } else {
+                resultsContainer.innerHTML = results.map(result => {
+                    let snippet = result.content;
+                    const searchTerms = query.toLowerCase().split(' ').filter(term => term.length > 0);
+                    
+                    let bestPos = 0;
+                    searchTerms.forEach(term => {
+                        const pos = snippet.toLowerCase().indexOf(term);
+                        if (pos !== -1) bestPos = Math.max(0, pos - 30);
+                    });
+                    
+                    snippet = snippet.substring(bestPos, bestPos + 120);
+                    if (bestPos > 0) snippet = '...' + snippet;
+                    if (bestPos + 120 < result.content.length) snippet += '...';
+                    
+                    searchTerms.forEach(term => {
+                        const regex = new RegExp('(' + term + ')', 'gi');
+                        snippet = snippet.replace(regex, '<mark>$1</mark>');
+                    });
+
+                    return `
+                        <a href="${result.url}" class="search-result-item">
+                            <div class="search-result-title">${result.title}</div>
+                            <div class="search-result-page">${result.page}</div>
+                            <div class="search-result-snippet">${snippet}</div>
+                        </a>
+                    `;
+                }).join('');
+            }
+            searchResults.classList.add('active');
+        }
+
+        searchInput.addEventListener('input', (e) => performSearch(e.target.value));
+        searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') performSearch(e.target.value); });
+        searchBtn.addEventListener('click', () => performSearch(searchInput.value));
+        closeResults.addEventListener('click', () => searchResults.classList.remove('active'));
+        document.addEventListener('click', (e) => { if (!e.target.closest('.search-container')) searchResults.classList.remove('active'); });
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); searchInput.focus(); }
+            if (e.key === 'Escape') { searchResults.classList.remove('active'); searchInput.blur(); }
+        });
+    </script>
+</body>
+</html>
