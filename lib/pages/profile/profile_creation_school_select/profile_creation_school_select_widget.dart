@@ -59,13 +59,31 @@ class _ProfileCreationSchoolSelectWidgetState
           logFirebaseEvent('profileCreationSchoolSelect_set_form_fie');
           _model.schoolSelectValueController?.value =
               valueOrDefault(currentUserDocument?.school, '');
+          _model.schoolSelectValue =
+              valueOrDefault(currentUserDocument?.school, '');
           logFirebaseEvent('profileCreationSchoolSelect_set_form_fie');
           _model.majorSelectValueController?.value =
+              valueOrDefault(currentUserDocument?.major, '');
+          _model.majorSelectValue =
               valueOrDefault(currentUserDocument?.major, '');
           logFirebaseEvent('profileCreationSchoolSelect_set_form_fie');
           _model.schoolYearTextController?.text =
               valueOrDefault(currentUserDocument?.schoolYear, 0).toString();
         }
+      } else {
+        logFirebaseEvent('profileCreationSchoolSelect_show_snack_b');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'error loading',
+              style: TextStyle(
+                color: FlutterFlowTheme.of(context).primaryText,
+              ),
+            ),
+            duration: Duration(milliseconds: 4000),
+            backgroundColor: FlutterFlowTheme.of(context).secondary,
+          ),
+        );
       }
     });
 

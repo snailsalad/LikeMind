@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
 
@@ -14,6 +15,8 @@ import '/index.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
+export '/backend/firebase_dynamic_links/firebase_dynamic_links.dart'
+    show generateCurrentPageLink;
 
 const kTransitionInfoKey = '__transition_info__';
 
@@ -78,9 +81,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) => appStateNotifier.loggedIn
-          ? entryPage ?? NavBarPage()
-          : LoginSignupPageWidget(),
+      errorBuilder: (context, state) => _RouteErrorBuilder(
+        state: state,
+        child: appStateNotifier.loggedIn
+            ? entryPage ?? NavBarPage()
+            : LoginSignupPageWidget(),
+      ),
       routes: [
         FFRoute(
           name: '_initialize',
@@ -90,19 +96,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
               : LoginSignupPageWidget(),
         ),
         FFRoute(
-          name: ProfileCreationSchoolSelectWidget.routeName,
-          path: ProfileCreationSchoolSelectWidget.routePath,
-          builder: (context, params) => ProfileCreationSchoolSelectWidget(),
-        ),
-        FFRoute(
           name: ProfileCreationAboutMeWidget.routeName,
           path: ProfileCreationAboutMeWidget.routePath,
           builder: (context, params) => ProfileCreationAboutMeWidget(),
-        ),
-        FFRoute(
-          name: LoginSignupPageWidget.routeName,
-          path: LoginSignupPageWidget.routePath,
-          builder: (context, params) => LoginSignupPageWidget(),
         ),
         FFRoute(
           name: ChangePasswordPageWidget.routeName,
@@ -113,19 +109,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           name: ProfileCreationSelectInterestsWidget.routeName,
           path: ProfileCreationSelectInterestsWidget.routePath,
           builder: (context, params) => ProfileCreationSelectInterestsWidget(),
-        ),
-        FFRoute(
-          name: MatchProfileWidget.routeName,
-          path: MatchProfileWidget.routePath,
-          asyncParams: {
-            'matchedUser': getDoc(['users'], UsersRecord.fromSnapshot),
-          },
-          builder: (context, params) => MatchProfileWidget(
-            matchedUser: params.getParam(
-              'matchedUser',
-              ParamType.Document,
-            ),
-          ),
         ),
         FFRoute(
           name: NpsSurveyPageWidget.routeName,
@@ -140,24 +123,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
                 : NavBarPage(
                     initialPage: 'userSearch',
                     page: UserSearchWidget(),
-                  )),
-        FFRoute(
-            name: MatchScreenWidget.routeName,
-            path: MatchScreenWidget.routePath,
-            builder: (context, params) => params.isEmpty
-                ? NavBarPage(initialPage: 'MatchScreen')
-                : NavBarPage(
-                    initialPage: 'MatchScreen',
-                    page: MatchScreenWidget(),
-                  )),
-        FFRoute(
-            name: ProfilePageWidget.routeName,
-            path: ProfilePageWidget.routePath,
-            builder: (context, params) => params.isEmpty
-                ? NavBarPage(initialPage: 'profilePage')
-                : NavBarPage(
-                    initialPage: 'profilePage',
-                    page: ProfilePageWidget(),
                   )),
         FFRoute(
           name: MessagingWidget.routeName,
@@ -183,7 +148,82 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
                 : NavBarPage(
                     initialPage: 'chats',
                     page: ChatsWidget(),
-                  ))
+                  )),
+        FFRoute(
+            name: ProfilePageWidget.routeName,
+            path: ProfilePageWidget.routePath,
+            builder: (context, params) => params.isEmpty
+                ? NavBarPage(initialPage: 'profilePage')
+                : NavBarPage(
+                    initialPage: 'profilePage',
+                    page: ProfilePageWidget(),
+                  )),
+        FFRoute(
+          name: ProfileCreationSchoolSelectWidget.routeName,
+          path: ProfileCreationSchoolSelectWidget.routePath,
+          builder: (context, params) => ProfileCreationSchoolSelectWidget(),
+        ),
+        FFRoute(
+          name: LoginSignupPageWidget.routeName,
+          path: LoginSignupPageWidget.routePath,
+          builder: (context, params) => LoginSignupPageWidget(),
+        ),
+        FFRoute(
+          name: MatchProfileWidget.routeName,
+          path: MatchProfileWidget.routePath,
+          asyncParams: {
+            'matchedUser': getDoc(['users'], UsersRecord.fromSnapshot),
+          },
+          builder: (context, params) => MatchProfileWidget(
+            matchedUser: params.getParam(
+              'matchedUser',
+              ParamType.Document,
+            ),
+          ),
+        ),
+        FFRoute(
+            name: FriendsListWidget.routeName,
+            path: FriendsListWidget.routePath,
+            builder: (context, params) => params.isEmpty
+                ? NavBarPage(initialPage: 'friendsList')
+                : NavBarPage(
+                    initialPage: 'friendsList',
+                    page: FriendsListWidget(),
+                  )),
+        FFRoute(
+            name: ProfilePageOtherWidget.routeName,
+            path: ProfilePageOtherWidget.routePath,
+            asyncParams: {
+              'matchedUser': getDoc(['users'], UsersRecord.fromSnapshot),
+            },
+            builder: (context, params) => NavBarPage(
+                  initialPage: '',
+                  page: ProfilePageOtherWidget(
+                    matchedUser: params.getParam(
+                      'matchedUser',
+                      ParamType.Document,
+                    ),
+                  ),
+                )),
+        FFRoute(
+            name: MatchScreenWidget.routeName,
+            path: MatchScreenWidget.routePath,
+            builder: (context, params) => params.isEmpty
+                ? NavBarPage(initialPage: 'MatchScreen')
+                : NavBarPage(
+                    initialPage: 'MatchScreen',
+                    page: MatchScreenWidget(),
+                  )),
+        FFRoute(
+          name: EmailVerificationWidget.routeName,
+          path: EmailVerificationWidget.routePath,
+          builder: (context, params) => EmailVerificationWidget(),
+        ),
+        FFRoute(
+          name: FriendRequestPageWidget.routeName,
+          path: FriendRequestPageWidget.routePath,
+          builder: (context, params) => FriendRequestPageWidget(),
+        )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
@@ -423,6 +463,58 @@ class TransitionInfo {
   final Alignment? alignment;
 
   static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
+}
+
+class _RouteErrorBuilder extends StatefulWidget {
+  const _RouteErrorBuilder({
+    Key? key,
+    required this.state,
+    required this.child,
+  }) : super(key: key);
+
+  final GoRouterState state;
+  final Widget child;
+
+  @override
+  State<_RouteErrorBuilder> createState() => _RouteErrorBuilderState();
+}
+
+class _RouteErrorBuilderState extends State<_RouteErrorBuilder> {
+  @override
+  void initState() {
+    super.initState();
+
+    // Handle erroneous links from Firebase Dynamic Links.
+
+    String? location;
+
+    /*
+    Handle `links` routes that have dynamic-link entangled with deep-link 
+    */
+    if (widget.state.uri.toString().startsWith('/link') &&
+        widget.state.uri.queryParameters.containsKey('deep_link_id')) {
+      final deepLinkId = widget.state.uri.queryParameters['deep_link_id'];
+      if (deepLinkId != null) {
+        final deepLinkUri = Uri.parse(deepLinkId);
+        final link = deepLinkUri.toString();
+        final host = deepLinkUri.host;
+        location = link.split(host).last;
+      }
+    }
+
+    if (widget.state.uri.toString().startsWith('/link') &&
+        widget.state.uri.toString().contains('request_ip_version')) {
+      location = '/';
+    }
+
+    if (location != null) {
+      SchedulerBinding.instance
+          .addPostFrameCallback((_) => context.go(location!));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
 }
 
 class RootPageContext {

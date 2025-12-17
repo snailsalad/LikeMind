@@ -11,7 +11,7 @@ class MatchProfileComponentWidget extends StatefulWidget {
   const MatchProfileComponentWidget({
     super.key,
     required this.width,
-    required this.macthes,
+    required this.matches,
     required this.name,
     required this.major,
     required this.image,
@@ -23,7 +23,7 @@ class MatchProfileComponentWidget extends StatefulWidget {
   }) : this.isLike = isLike ?? false;
 
   final double? width;
-  final String? macthes;
+  final String? matches;
   final String? name;
   final String? major;
   final String? image;
@@ -157,7 +157,7 @@ class _MatchProfileComponentWidgetState
                               8.0, 4.0, 8.0, 4.0),
                           child: Text(
                             valueOrDefault<String>(
-                              widget.macthes,
+                              widget.matches,
                               'Match 90%',
                             ),
                             style: FlutterFlowTheme.of(context)

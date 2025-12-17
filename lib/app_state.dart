@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'flutter_flow/flutter_flow_util.dart';
 
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();
@@ -16,19 +15,12 @@ class FFAppState extends ChangeNotifier {
     _instance = FFAppState._internal();
   }
 
-  Future initializePersistedState() async {
-    prefs = await SharedPreferences.getInstance();
-    _safeInit(() {
-      _HobbiesList = prefs.getStringList('ff_HobbiesList') ?? _HobbiesList;
-    });
-  }
+  Future initializePersistedState() async {}
 
   void update(VoidCallback callback) {
     callback();
     notifyListeners();
   }
-
-  late SharedPreferences prefs;
 
   List<String> _MajorList = [];
   List<String> get MajorList => _MajorList;
@@ -59,55 +51,22 @@ class FFAppState extends ChangeNotifier {
     MajorList.insert(index, value);
   }
 
-  List<MainModelStruct> _MatchesList = [];
-  List<MainModelStruct> get MatchesList => _MatchesList;
-  set MatchesList(List<MainModelStruct> value) {
-    _MatchesList = value;
-  }
-
-  void addToMatchesList(MainModelStruct value) {
-    MatchesList.add(value);
-  }
-
-  void removeFromMatchesList(MainModelStruct value) {
-    MatchesList.remove(value);
-  }
-
-  void removeAtIndexFromMatchesList(int index) {
-    MatchesList.removeAt(index);
-  }
-
-  void updateMatchesListAtIndex(
-    int index,
-    MainModelStruct Function(MainModelStruct) updateFn,
-  ) {
-    MatchesList[index] = updateFn(_MatchesList[index]);
-  }
-
-  void insertAtIndexInMatchesList(int index, MainModelStruct value) {
-    MatchesList.insert(index, value);
-  }
-
   List<String> _HobbiesList = [];
   List<String> get HobbiesList => _HobbiesList;
   set HobbiesList(List<String> value) {
     _HobbiesList = value;
-    prefs.setStringList('ff_HobbiesList', value);
   }
 
   void addToHobbiesList(String value) {
     HobbiesList.add(value);
-    prefs.setStringList('ff_HobbiesList', _HobbiesList);
   }
 
   void removeFromHobbiesList(String value) {
     HobbiesList.remove(value);
-    prefs.setStringList('ff_HobbiesList', _HobbiesList);
   }
 
   void removeAtIndexFromHobbiesList(int index) {
     HobbiesList.removeAt(index);
-    prefs.setStringList('ff_HobbiesList', _HobbiesList);
   }
 
   void updateHobbiesListAtIndex(
@@ -115,23 +74,96 @@ class FFAppState extends ChangeNotifier {
     String Function(String) updateFn,
   ) {
     HobbiesList[index] = updateFn(_HobbiesList[index]);
-    prefs.setStringList('ff_HobbiesList', _HobbiesList);
   }
 
   void insertAtIndexInHobbiesList(int index, String value) {
     HobbiesList.insert(index, value);
-    prefs.setStringList('ff_HobbiesList', _HobbiesList);
   }
-}
 
-void _safeInit(Function() initializeField) {
-  try {
-    initializeField();
-  } catch (_) {}
-}
+  List<DocumentReference> _matchesListRefs = [];
+  List<DocumentReference> get matchesListRefs => _matchesListRefs;
+  set matchesListRefs(List<DocumentReference> value) {
+    _matchesListRefs = value;
+  }
 
-Future _safeInitAsync(Function() initializeField) async {
-  try {
-    await initializeField();
-  } catch (_) {}
+  void addToMatchesListRefs(DocumentReference value) {
+    matchesListRefs.add(value);
+  }
+
+  void removeFromMatchesListRefs(DocumentReference value) {
+    matchesListRefs.remove(value);
+  }
+
+  void removeAtIndexFromMatchesListRefs(int index) {
+    matchesListRefs.removeAt(index);
+  }
+
+  void updateMatchesListRefsAtIndex(
+    int index,
+    DocumentReference Function(DocumentReference) updateFn,
+  ) {
+    matchesListRefs[index] = updateFn(_matchesListRefs[index]);
+  }
+
+  void insertAtIndexInMatchesListRefs(int index, DocumentReference value) {
+    matchesListRefs.insert(index, value);
+  }
+
+  List<DocumentReference> _emptyList = [];
+  List<DocumentReference> get emptyList => _emptyList;
+  set emptyList(List<DocumentReference> value) {
+    _emptyList = value;
+  }
+
+  void addToEmptyList(DocumentReference value) {
+    emptyList.add(value);
+  }
+
+  void removeFromEmptyList(DocumentReference value) {
+    emptyList.remove(value);
+  }
+
+  void removeAtIndexFromEmptyList(int index) {
+    emptyList.removeAt(index);
+  }
+
+  void updateEmptyListAtIndex(
+    int index,
+    DocumentReference Function(DocumentReference) updateFn,
+  ) {
+    emptyList[index] = updateFn(_emptyList[index]);
+  }
+
+  void insertAtIndexInEmptyList(int index, DocumentReference value) {
+    emptyList.insert(index, value);
+  }
+
+  List<DocumentReference> _temp = [];
+  List<DocumentReference> get temp => _temp;
+  set temp(List<DocumentReference> value) {
+    _temp = value;
+  }
+
+  void addToTemp(DocumentReference value) {
+    temp.add(value);
+  }
+
+  void removeFromTemp(DocumentReference value) {
+    temp.remove(value);
+  }
+
+  void removeAtIndexFromTemp(int index) {
+    temp.removeAt(index);
+  }
+
+  void updateTempAtIndex(
+    int index,
+    DocumentReference Function(DocumentReference) updateFn,
+  ) {
+    temp[index] = updateFn(_temp[index]);
+  }
+
+  void insertAtIndexInTemp(int index, DocumentReference value) {
+    temp.insert(index, value);
+  }
 }

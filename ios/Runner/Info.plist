@@ -37,15 +37,15 @@
         <key>CFBundleTypeRole</key>
         <string>Editor</string>
         <key>CFBundleURLName</key>
-        <string>likemind.com</string>
+        <string>like_mind</string>
         <key>CFBundleURLSchemes</key>
         <array>
-        <string>likemind</string>
+        <string>com.uricsc305.likemind</string>
         </array>
         </dict>
     </array>
     <key>FlutterDeepLinkingEnabled</key>
-    <true/>
+    <false/>
 
 
 	<key>CFBundleVersion</key>

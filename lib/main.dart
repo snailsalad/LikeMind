@@ -10,19 +10,29 @@ import 'auth/firebase_auth/auth_util.dart';
 import 'backend/firebase/firebase_config.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
+import 'package:flutter/foundation.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'index.dart';
+
+import '/backend/firebase_dynamic_links/firebase_dynamic_links.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
 
+  final environmentValues = FFDevEnvironmentValues();
+  await environmentValues.initialize();
+
   await initFirebase();
 
   final appState = FFAppState(); // Initialize FFAppState
   await appState.initializePersistedState();
 
+  if (!kIsWeb) {
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  }
   await initializeFirebaseRemoteConfig();
 
   runApp(ChangeNotifierProvider(
@@ -120,6 +130,10 @@ class _MyAppState extends State<MyApp> {
       ),
       themeMode: _themeMode,
       routerConfig: _router,
+      builder: (_, child) => DynamicLinksHandler(
+        router: _router,
+        child: child!,
+      ),
     );
   }
 }
@@ -155,10 +169,11 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'MatchScreen': MatchScreenWidget(),
       'userSearch': UserSearchWidget(),
       'chats': ChatsWidget(),
       'profilePage': ProfilePageWidget(),
+      'friendsList': FriendsListWidget(),
+      'MatchScreen': MatchScreenWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -194,14 +209,14 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  currentIndex == 0 ? Icons.home : Icons.home_outlined,
+                  Icons.search,
                   color: currentIndex == 0
                       ? FlutterFlowTheme.of(context).accentOchre
                       : FlutterFlowTheme.of(context).secondaryText,
-                  size: currentIndex == 0 ? 24.0 : 24.0,
+                  size: 24.0,
                 ),
                 Text(
-                  'Home',
+                  'Search',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 0
@@ -218,14 +233,16 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.search,
+                  currentIndex == 1
+                      ? Icons.chat_bubble
+                      : Icons.chat_bubble_outline,
                   color: currentIndex == 1
                       ? FlutterFlowTheme.of(context).accentOchre
                       : FlutterFlowTheme.of(context).secondaryText,
-                  size: 24.0,
+                  size: currentIndex == 1 ? 24.0 : 24.0,
                 ),
                 Text(
-                  'Search',
+                  'Chat',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 1
@@ -243,15 +260,15 @@ class _NavBarPageState extends State<NavBarPage> {
               children: [
                 Icon(
                   currentIndex == 2
-                      ? Icons.chat_bubble
-                      : Icons.chat_bubble_outline,
+                      ? Icons.account_circle_sharp
+                      : Icons.account_circle_outlined,
                   color: currentIndex == 2
                       ? FlutterFlowTheme.of(context).accentOchre
                       : FlutterFlowTheme.of(context).secondaryText,
                   size: currentIndex == 2 ? 24.0 : 24.0,
                 ),
                 Text(
-                  'Chat',
+                  'Profile',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 2
@@ -269,18 +286,42 @@ class _NavBarPageState extends State<NavBarPage> {
               children: [
                 Icon(
                   currentIndex == 3
-                      ? Icons.account_circle_sharp
-                      : Icons.account_circle_outlined,
+                      ? Icons.people_rounded
+                      : Icons.people_outline,
                   color: currentIndex == 3
                       ? FlutterFlowTheme.of(context).accentOchre
                       : FlutterFlowTheme.of(context).secondaryText,
                   size: currentIndex == 3 ? 24.0 : 24.0,
                 ),
                 Text(
-                  'Profile',
+                  'Friends',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 3
+                        ? FlutterFlowTheme.of(context).accentOchre
+                        : FlutterFlowTheme.of(context).secondaryText,
+                    fontSize: 11.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          FloatingNavbarItem(
+            customWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  currentIndex == 4 ? Icons.home : Icons.home_outlined,
+                  color: currentIndex == 4
+                      ? FlutterFlowTheme.of(context).accentOchre
+                      : FlutterFlowTheme.of(context).secondaryText,
+                  size: currentIndex == 4 ? 24.0 : 24.0,
+                ),
+                Text(
+                  'Home',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: currentIndex == 4
                         ? FlutterFlowTheme.of(context).accentOchre
                         : FlutterFlowTheme.of(context).secondaryText,
                     fontSize: 11.0,

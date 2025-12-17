@@ -51,17 +51,21 @@ class _ProfileCreationSelectInterestsWidgetState
 
         if ((_model.hobbiesRes?.succeeded ?? true)) {
           logFirebaseEvent('profileCreationSelectInterests_update_ap');
-          FFAppState().HobbiesList = GetHobbiesCall.hobbies(
-            (_model.hobbiesRes?.jsonBody ?? ''),
-          )!
-              .toList()
-              .cast<String>();
+          FFAppState().HobbiesList =
+              ((_model.hobbiesRes?.jsonBody ?? '') as List)
+                  .map<String>((e) => e.toString())
+                  .toList()
+                  .cast<String>()
+                  .toList()
+                  .cast<String>();
         }
       }
       if ((currentUserDocument?.interests.toList() ?? []).isNotEmpty) {
         logFirebaseEvent('profileCreationSelectInterests_set_form_');
         _model.interestsDropDownValueController?.value =
             (currentUserDocument?.interests.toList() ?? []);
+        _model.interestsDropDownValue =
+            List.from((currentUserDocument?.interests.toList() ?? []));
         logFirebaseEvent('profileCreationSelectInterests_set_form_');
         _model.interestChipsValueController?.value =
             (currentUserDocument?.interests.toList() ?? []);

@@ -151,21 +151,21 @@ void main() async {
     ));
     await GoogleFonts.pendingFonts();
 
-    await tester.pumpAndSettle(const Duration(milliseconds: 2));
+    await tester.pumpAndSettle(const Duration(milliseconds: 2000));
     await tester.tap(find.byKey(const ValueKey('LoginTab_giet')));
     await tester.enterText(
-        find.byKey(const ValueKey('LoginEmail_z4g2')), 'dickbutt@aol.com');
+        find.byKey(const ValueKey('LoginEmail_z4g2')), 'tester@example.com');
     await tester.enterText(
-        find.byKey(const ValueKey('LoginPassword_950w')), 'Password123!');
+        find.byKey(const ValueKey('LoginPassword_950w')), 'Passwor1!');
     await tester.tap(find.byKey(const ValueKey('LoginButton_styz')));
     await tester.pumpAndSettle(const Duration(milliseconds: 5000));
     await tester.tap(find.byIcon(Icons.chat_bubble_outline));
     await tester.pumpAndSettle(const Duration(milliseconds: 5000));
     await tester.enterText(
         find.byKey(const ValueKey('ChatField_dxuy')), 'Test Message');
-    await tester.pumpAndSettle(const Duration(milliseconds: 2));
+    await tester.pumpAndSettle(const Duration(milliseconds: 2000));
     await tester.tap(find.byKey(const ValueKey('SendButton_uu4q')));
-    await tester.pumpAndSettle(const Duration(milliseconds: 5));
+    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
     expect(find.text('Test Message'), findsWidgets);
   });
 }

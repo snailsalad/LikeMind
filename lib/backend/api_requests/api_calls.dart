@@ -55,10 +55,38 @@ class GetHobbiesCall {
       alwaysAllowBody: false,
     );
   }
+}
 
-  static List<String>? hobbies(dynamic response) => (getJsonField(
+class MatchingCall {
+  static Future<ApiCallResponse> call({
+    String? userid = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "userId": "${escapeStringForJson(userid)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'matching',
+      apiUrl: 'https://matchingsys-lmz2miyhaa-uc.a.run.app',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static List<String>? userIds(dynamic response) => (getJsonField(
         response,
-        r'''$[:].title''',
+        r'''$[:].uid''',
         true,
       ) as List?)
           ?.withoutNulls
@@ -112,4 +140,15 @@ String _serializeJson(dynamic jsonVar, [bool isList = false]) {
     }
     return isList ? '[]' : '{}';
   }
+}
+
+String? escapeStringForJson(String? input) {
+  if (input == null) {
+    return null;
+  }
+  return input
+      .replaceAll('\\', '\\\\')
+      .replaceAll('"', '\\"')
+      .replaceAll('\n', '\\n')
+      .replaceAll('\t', '\\t');
 }

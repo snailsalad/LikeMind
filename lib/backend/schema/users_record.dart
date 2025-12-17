@@ -95,6 +95,32 @@ class UsersRecord extends FirestoreRecord {
   int get loginCount => _loginCount ?? 0;
   bool hasLoginCount() => _loginCount != null;
 
+  // "blocked" field.
+  List<DocumentReference>? _blocked;
+  List<DocumentReference> get blocked => _blocked ?? const [];
+  bool hasBlocked() => _blocked != null;
+
+  // "blockedBy" field.
+  List<DocumentReference>? _blockedBy;
+  List<DocumentReference> get blockedBy => _blockedBy ?? const [];
+  bool hasBlockedBy() => _blockedBy != null;
+
+  // "friends" field.
+  List<DocumentReference>? _friends;
+  List<DocumentReference> get friends => _friends ?? const [];
+  bool hasFriends() => _friends != null;
+
+  // "friendsWithUser" field.
+  List<DocumentReference>? _friendsWithUser;
+  List<DocumentReference> get friendsWithUser => _friendsWithUser ?? const [];
+  bool hasFriendsWithUser() => _friendsWithUser != null;
+
+  // "pendingFriendRequest" field.
+  List<DocumentReference>? _pendingFriendRequest;
+  List<DocumentReference> get pendingFriendRequest =>
+      _pendingFriendRequest ?? const [];
+  bool hasPendingFriendRequest() => _pendingFriendRequest != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -112,6 +138,11 @@ class UsersRecord extends FirestoreRecord {
     _major = snapshotData['Major'] as String?;
     _finishedOnboarding = snapshotData['finishedOnboarding'] as bool?;
     _loginCount = castToType<int>(snapshotData['loginCount']);
+    _blocked = getDataList(snapshotData['blocked']);
+    _blockedBy = getDataList(snapshotData['blockedBy']);
+    _friends = getDataList(snapshotData['friends']);
+    _friendsWithUser = getDataList(snapshotData['friendsWithUser']);
+    _pendingFriendRequest = getDataList(snapshotData['pendingFriendRequest']);
   }
 
   static CollectionReference get collection =>
@@ -208,7 +239,12 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.phoneNumber == e2?.phoneNumber &&
         e1?.major == e2?.major &&
         e1?.finishedOnboarding == e2?.finishedOnboarding &&
-        e1?.loginCount == e2?.loginCount;
+        e1?.loginCount == e2?.loginCount &&
+        listEquality.equals(e1?.blocked, e2?.blocked) &&
+        listEquality.equals(e1?.blockedBy, e2?.blockedBy) &&
+        listEquality.equals(e1?.friends, e2?.friends) &&
+        listEquality.equals(e1?.friendsWithUser, e2?.friendsWithUser) &&
+        listEquality.equals(e1?.pendingFriendRequest, e2?.pendingFriendRequest);
   }
 
   @override
@@ -228,7 +264,12 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.phoneNumber,
         e?.major,
         e?.finishedOnboarding,
-        e?.loginCount
+        e?.loginCount,
+        e?.blocked,
+        e?.blockedBy,
+        e?.friends,
+        e?.friendsWithUser,
+        e?.pendingFriendRequest
       ]);
 
   @override

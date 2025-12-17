@@ -2,6 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/pages/components/forgot_password/forgot_password_widget.dart';
 import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +105,7 @@ class _LoginSignupPageWidgetState extends State<LoginSignupPageWidget>
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12.0),
                         child: Image.asset(
-                          'assets/images/ChatGPT_Image_Oct_22,_2025,_04_06_28_PM.png',
+                          'assets/images/LikeMindTransparent.png',
                           width: 128.0,
                           fit: BoxFit.contain,
                           alignment: Alignment(0.0, 0.0),
@@ -1053,6 +1054,100 @@ class _LoginSignupPageWidgetState extends State<LoginSignupPageWidget>
                                             .asValidator(context),
                                       ),
                                     ),
+                                    InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        logFirebaseEvent(
+                                            'LOGIN_SIGNUP_forgotPassword_ON_TAP');
+                                        logFirebaseEvent(
+                                            'forgotPassword_bottom_sheet');
+                                        await showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          backgroundColor: colorFromCssString(
+                                            getRemoteConfigString(
+                                                'backgroundColor'),
+                                            defaultColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primaryBackground,
+                                          ),
+                                          enableDrag: false,
+                                          context: context,
+                                          builder: (context) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                FocusScope.of(context)
+                                                    .unfocus();
+                                                FocusManager
+                                                    .instance.primaryFocus
+                                                    ?.unfocus();
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    MediaQuery.viewInsetsOf(
+                                                        context),
+                                                child: ForgotPasswordWidget(),
+                                              ),
+                                            );
+                                          },
+                                        ).then((value) => safeSetState(() {}));
+                                      },
+                                      child: Container(
+                                        width: 181.13,
+                                        height: 29.7,
+                                        decoration: BoxDecoration(
+                                          color: colorFromCssString(
+                                            getRemoteConfigString(
+                                                'backgroundColor'),
+                                            defaultColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primaryBackground,
+                                          ),
+                                        ),
+                                        child: Align(
+                                          alignment:
+                                              AlignmentDirectional(0.0, 0.0),
+                                          child: Text(
+                                            'Forgot Password?',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .accentOchre,
+                                                  fontSize: 16.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ]
                                       .divide(SizedBox(height: 15.0))
                                       .addToStart(SizedBox(height: 15.0)),
@@ -1145,28 +1240,6 @@ class _LoginSignupPageWidgetState extends State<LoginSignupPageWidget>
                             onPressed: () async {
                               logFirebaseEvent(
                                   'LOGIN_SIGNUP_SignUpButton_ON_TAP');
-                              logFirebaseEvent('SignUpButton_validate_form');
-                              if (_model.formKey.currentState == null ||
-                                  !_model.formKey.currentState!.validate()) {
-                                return;
-                              }
-                              logFirebaseEvent('SignUpButton_auth');
-                              await authManager.sendEmailVerification();
-                              logFirebaseEvent('SignUpButton_show_snack_bar');
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Verification email sent! Please check your .edu inbox',
-                                    style: TextStyle(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                    ),
-                                  ),
-                                  duration: Duration(milliseconds: 4000),
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).secondary,
-                                ),
-                              );
                               logFirebaseEvent('SignUpButton_auth');
                               GoRouter.of(context).prepareAuthEvent();
                               if (_model.signupPasswordTextController.text !=
@@ -1191,14 +1264,26 @@ class _LoginSignupPageWidgetState extends State<LoginSignupPageWidget>
                                 return;
                               }
 
-                              logFirebaseEvent(
-                                  'SignUpButton_google_analytics_event');
-                              logFirebaseEvent('signup_button');
-                              logFirebaseEvent('SignUpButton_navigate_to');
+                              logFirebaseEvent('SignUpButton_auth');
+                              await authManager.sendEmailVerification();
+                              logFirebaseEvent('SignUpButton_show_snack_bar');
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Verification email sent! Please check your .edu inbox',
+                                    style: TextStyle(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
+                                  ),
+                                  duration: Duration(milliseconds: 4000),
+                                  backgroundColor: FlutterFlowTheme.of(context)
+                                      .primaryYellow,
+                                ),
+                              );
 
                               context.goNamedAuth(
-                                  ProfileCreationSchoolSelectWidget.routeName,
-                                  context.mounted);
+                                  ProfilePageWidget.routeName, context.mounted);
                             },
                             text: 'Sign Up',
                             options: FFButtonOptions(

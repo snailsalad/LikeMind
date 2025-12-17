@@ -94,3 +94,34 @@ String? convertListToString(List<String>? listString) {
   return listString.join(
       ', '); // Join the list elements into a single string separated by commas
 }
+
+List<DocumentReference> docrefFromString(
+  List<String> idList,
+  String docPath,
+) {
+  final FirebaseFirestore firebase = FirebaseFirestore.instance;
+  List<DocumentReference> docList = <DocumentReference>[];
+
+  idList.forEach((e) {
+    docList.add(firebase.doc(docPath + e));
+  });
+
+  return docList;
+}
+
+List<DocumentReference> removeFriendsAndBlocks(
+  List<DocumentReference> usersToRemove,
+  List<DocumentReference> matches,
+) {
+  matches.removeWhere((e) => usersToRemove.contains(e));
+  return matches;
+}
+
+List<DocumentReference> mergeDocRefs(
+  List<DocumentReference> blocked,
+  List<DocumentReference> blockedBy,
+  List<DocumentReference> friends,
+  List<DocumentReference> friendedBy,
+) {
+  return [...blocked, ...blockedBy, ...friends, ...friendedBy].toSet().toList();
+}
